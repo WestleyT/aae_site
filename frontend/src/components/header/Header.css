@@ -1,0 +1,34 @@
+.header {
+    /* margin-top: 60px; */
+    background-color: #222323;
+    margin: 40px 25px 5px 25px;
+}
+
+.header-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    color: #f0f6f0;
+}
+
+.header-title-sm {
+    position: absolute;
+    top: 18%;
+    font-size: 20px;
+}
+
+.header-title-lrg {
+    /* position: absolute; */
+    top: 20%;
+    font-size: 30px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: #969696;
+}
+
+.header-image {
+    width: 100%;
+    height: 450px;
+    margin-top: 80px;
+    object-fit: cover;
+}
