@@ -50,7 +50,7 @@ function App() {
         <Route path="/login" element={user ? <Home /> : <Login />}></Route>
         <Route path="/settings" element={<Settings />}></Route>
         <Route path="/write" element={<Write />}></Route>
-        <Route path="/post/:postid" element={<SinglePost />}></Route>
+        <Route path="/posts/:postId" element={<SinglePost />}></Route>
       </Routes>
     </Router>
   );

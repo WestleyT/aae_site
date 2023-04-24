@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../components/header/Header';
 import Posts from '../../components/posts/Posts';
-import Sidebar from '../../components/sidebar/Sidebar';
 import './Home.css';
 
 export default function Home() {
@@ -17,6 +16,10 @@ export default function Home() {
     };
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    console.log('posts ', posts)
+  }, [posts]);
 
   return (
     <>

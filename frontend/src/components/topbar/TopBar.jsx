@@ -5,7 +5,6 @@ import './TopBar.css'
 
 export default function TopBar() {
   const {user, dispatch} = useContext(Context);
-  console.log(user);
 
   const handleLogout = () => {
     dispatch({type: 'LOGOUT'});

@@ -17,7 +17,7 @@ router.post("/", userValidation.verify, async(req, res) => {
 //get post by id
 router.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id).populate('userId', 'firstName lastName');
         res.status(200).json(post);
     } catch(error) {
         res.status(500).json(error);
@@ -36,7 +36,7 @@ router.get('/', async(req, res) => {
                 },
             });
         } else {
-            posts = await Post.find();
+            posts = await Post.find().select('tags title createdAt');
         }
         res.status(200).json(posts);
     } catch(error) {

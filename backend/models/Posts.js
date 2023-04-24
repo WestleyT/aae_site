@@ -17,7 +17,8 @@ const PostSchema = new mongoose.Schema({
     },
     userId: {
         type: mongoose.ObjectId, //must use .equals() since this in a object and == will only compare references
-        required: true
+        required: true,
+        ref: 'User'
     },
     tags: {
         type: Array,

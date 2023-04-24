@@ -1,10 +1,10 @@
-import Post from '../post/Post'
-import './Posts.css'
+import Post from '../post/Post';
+import './Posts.css';
 
 export default function Posts({ posts }) {
   return (
     <div className='posts'>
-        {posts.map((p) => (
+        {posts.map((p, parent) => (
           <Post key={p._id} post={p}/>
         ))}
     </div>
