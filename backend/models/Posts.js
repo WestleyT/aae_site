@@ -23,6 +23,14 @@ const PostSchema = new mongoose.Schema({
     tags: {
         type: Array,
         required: false
+    },
+    published: {
+        type: Boolean,
+        required: true
+    },
+    publishDate: {
+        type: Date,
+        required: false
     }
 }, {timestamps: true});
 

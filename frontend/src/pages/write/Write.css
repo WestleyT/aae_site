@@ -4,12 +4,13 @@
 
 .write-form {
     position: relative;
+    margin: 10px 500px 10px 30px;
 }
 
 .write-form-group {
     margin-left: 150px;
     display: flex;
-    align-items: center;
+    align-items: left;
 }
 
 .write-input {
@@ -17,6 +18,8 @@
     border: none;
     padding: 20px;
     width: 70vw;
+    background-color: #222323;
+    color: #f0f6f0;
 }
 
 .write-input:focus {
@@ -28,13 +31,33 @@
 }
 
 .write-submit {
-    position: absolute;
-    top: 20px;
-    right: 50px;
-    color: white;
-    background-color: teal;
-    border: none;
-    border-radius: 10px;
+    margin: 10px;
     cursor: pointer;
-    font-size: 16px;
+    padding: 10px;
+    background-color: #222323;
+    color: #f6f0f6;
+    border-color: #f6f0f6;
+    border-width: 2px;
+}
+
+.submit-wrapper {
+    display: inline-block;
+}
+
+#publishDate {
+    margin: 10px;
+}
+
+.ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: #f0f6f0 !important;
+}
+
+.ql-toolbar .ql-fill {
+    fill: #f0f6f0 !important;
+    stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+    color: #f0f6f0 !important;
 }

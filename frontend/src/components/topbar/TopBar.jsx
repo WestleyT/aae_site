@@ -25,6 +25,11 @@ export default function TopBar() {
                 <Link className='link' to='/write'>Write</Link>
               </li>
             }
+            {
+              user && user.userClass === 'writer' && <li className='top-list-item'>
+                <Link className='link' to='/drafts'>Drafts</Link>
+              </li>
+            }
             {logInOutButton}     
           </ul>
         </div>

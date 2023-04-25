@@ -5,6 +5,7 @@ import Write from "./pages/write/Write";
 import Settings from "./pages/settings/Settings";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Drafts from "./components/posts/Drafts";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -50,6 +51,8 @@ function App() {
         <Route path="/login" element={user ? <Home /> : <Login />}></Route>
         <Route path="/settings" element={<Settings />}></Route>
         <Route path="/write" element={<Write />}></Route>
+        <Route path="/write/:postId" element={<Write />}></Route>
+        <Route path="/drafts" element={<Drafts />}></Route>
         <Route path="/posts/:postId" element={<SinglePost />}></Route>
       </Routes>
     </Router>

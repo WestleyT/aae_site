@@ -1,13 +1,11 @@
 import './Header.css'
 
-export default function Header() {
+export default function Header({ headerText }) {
   return (
     <div className='header'>
         <div className="header-titles">
-            {/* <span className='header-title-sm'>Games</span> */}
-            <span className='header-title-lrg'>Articles</span>
+            <span className='header-title-lrg'>{headerText}</span>
         </div>
-        {/* <img className='header-image' src='https://cdn.britannica.com/55/88055-050-95880081/Black-carpenter-ant.jpg' /> */}
     </div>
   )
 }

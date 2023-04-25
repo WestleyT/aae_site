@@ -14,6 +14,16 @@ router.post("/", userValidation.verify, async(req, res) => {
     }
 })
 
+//update post
+router.post("/:id", async (req, res) => {
+    try {
+        const updatedPost = await Post.findOneAndUpdate({_id: req.params.id}, req.body); //, {new: true});
+        res.status(200).json(updatedPost);
+    } catch(error) {
+        res.status(500).json(error);
+    }
+})
+
 //get post by id
 router.get('/:id', async (req, res) => {
     try {
@@ -24,7 +34,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//get all posts
+//get all published posts
 router.get('/', async(req, res) => {
     const catName = req.query.cat;
     try {
@@ -36,12 +46,23 @@ router.get('/', async(req, res) => {
                 },
             });
         } else {
-            posts = await Post.find().select('tags title createdAt');
+            posts = await Post.find({published: true}, 'title tags publishDate').sort({publishDate: -1});
         }
         res.status(200).json(posts);
     } catch(error) {
         res.status(500).json(error);
     }
+})
+
+//get all draft posts
+router.get('/drafts/:userId', async (req, res) => {
+    try {
+        const posts = await Post.find({published: false, userId: req.params.userId}, 'title tags publishDate');
+        res.status(200).json(posts);
+    } catch(error) {
+        res.status(500).json(error);
+    }
+
 })
 
 module.exports = router;

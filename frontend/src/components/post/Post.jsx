@@ -2,13 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import dateToWordsFormat from '../../utils/dates';
 import './Post.css'
 
-export default function Post({post}) {
+export default function Post({post, route}) {
   const categories = ['tutorial', 'godot', 'design'];
 
   const navigate = useNavigate();
   const goToPost = (e) => {
     e.preventDefault();
-    navigate(`/posts/${post._id}`);
+    navigate(`/${route}/${post._id}`);
   }
 
   return (
@@ -16,7 +16,7 @@ export default function Post({post}) {
         <div className="post-info">
             <span className='post-title'>{post.title}</span>
             <div className='details'>
-              <span className='post-date'>{dateToWordsFormat(post.createdAt)}</span>
+              <span className='post-date'>{dateToWordsFormat(post.publishDate)}</span>
               <p className='seperator'> - </p>
               <div className="post-categories">
                 {categories.map((c) => (
