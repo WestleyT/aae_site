@@ -20,10 +20,15 @@ const PostSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    tags: {
-        type: Array,
-        required: false
-    },
+    tags: [{
+        type: mongoose.ObjectId,
+        ref: 'Category'
+    }],
+    // tags: {
+    //     type: Array,
+    //     required: false,
+    //     ref: 'Category'
+    // },
     published: {
         type: Boolean,
         required: true

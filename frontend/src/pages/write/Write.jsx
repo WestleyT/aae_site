@@ -3,14 +3,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Context } from '../../context/Context';
+import Combobox from '../../components/combobox/Combobox';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export default function Write() {
-    const [title, setPostTitle] = useState('');
-    const [body, setPostBody] = useState('');
-    const [publishLaterChecked, setPublishLaterChecked] = useState(false);
-    const [date, setDate] = useState('');
+    const [publishLater, setPublishLater] = useState(false);
+    const [postContent, setPostContent] = useState({});
 
     const params = useParams();
     const {user} = useContext(Context);
@@ -26,41 +25,28 @@ export default function Write() {
         }  
     }, []);
 
-    const setPostContent = (content) => {
-        setPostTitle(content.title);
-        setPostBody(content.body);
-        setDate(content.publishDate);
-        setPublishLaterChecked(true);
+    const publishLaterChange = (e) => {
+        setPublishLater(!publishLater);
     }
 
-    const publishLaterChange = (e) => {
-        setPublishLaterChecked(!publishLaterChecked);
+    const handleChange = (e) => {
+        setPostContent({...postContent, [e.target.name]: e.target.value});
+    }
+
+    //ReactQuill does not send an event object, so we need a different change handler that just accepts the value
+    const handleBodyChange =(value) => {
+        setPostContent({...postContent, body: value});
     }
 
     const handleSave = (e) => {
-        e.preventDefault();
-        const newPost = {
-            title,
-            body,
-            userId: user._id,
-            published : false,
-            publishDate : null
-        }
-
-        submitPost(newPost);
+        setPostContent({...postContent, userId: user._id, published: false, publishDate: null});   
+        submitPost(postContent);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newPost = {
-            title,
-            body,
-            userId: user._id,
-            published : !publishLaterChecked,
-            publishDate : publishLaterChecked ? date : new Date()
-        }
-
-        submitPost(newPost);
+        setPostContent({...postContent, userId : user._id, published: !publishLater, publishDate: postContent.publishDate ? postContent.publishDate : new Date()});
+        submitPost(postContent);
     }
 
     const submitPost = async (post) => {
@@ -81,17 +67,17 @@ export default function Write() {
         <div className="write">
             <form className='write-form' onSubmit={handleSubmit}>
                 <div className='write-form-group'>
-                    {/* <input type='file' id='file-input' /> */}
-                    <input type='text' className='write-input' autoFocus={true} onChange={e => setPostTitle(e.target.value)} value={title} placeholder='Title' />
+                    <input type='text' className='write-input' autoFocus={true} name='title' onChange={handleChange} value={postContent.title || ''} placeholder='Title' />
                 </div>
-                <ReactQuill theme='snow' value={body} onChange={setPostBody} />
+                <ReactQuill theme='snow' value={postContent.body || ''} name='body' onChange={handleBodyChange} />
+                <Combobox />
                 <div className='submit-wrapper'>
                     <button className="write-submit" name='save' onClick={handleSave}>Save</button>
                     <span> ~or~ </span>
-                    <input type='checkbox' id='publish-later' checked={publishLaterChecked} onChange={publishLaterChange}></input>
+                    <input type='checkbox' id='publish-later' name='publishLater' checked={publishLater} onChange={publishLaterChange}></input>
                     <label htmlFor='publish-later'>Publish Later</label>
-                    {publishLaterChecked && <input type='date' id='publishDate' name='publishDate' value={date} onChange={(e) => setDate(e.currentTarget.value)}></input>}
-                    <button className="write-submit" type='submit' name='publish'>{publishLaterChecked ? 'Publish Later' : 'Publish Now'}</button>
+                    {publishLater && <input type='date' id='publishDate' name='publishDate' value={postContent.publishDate} onChange={handleChange}></input>}
+                    <button className="write-submit" type='submit' name='publish'>{publishLater ? 'Publish Later' : 'Publish Now'}</button>
                 </div>
             </form>
         </div>
