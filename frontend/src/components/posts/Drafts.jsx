@@ -18,10 +18,6 @@ export default function Drafts() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    console.log('posts ', posts)
-  }, [posts]);
-
   return (
     <>
       <Header headerText='Drafts'></Header>

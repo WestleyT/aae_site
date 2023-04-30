@@ -5,18 +5,21 @@ import 'react-quill/dist/quill.snow.css';
 import { Context } from '../../context/Context';
 import Combobox from '../../components/combobox/Combobox';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Write() {
     const [publishLater, setPublishLater] = useState(false);
     const [postContent, setPostContent] = useState({});
+    const [selectedTags, setSelectedTags] = useState([]);
 
     const params = useParams();
     const {user} = useContext(Context);
+    const nav = useNavigate();
 
     useEffect(() => {
         const fetchContent = async() => {
             const response = await axios.get(`/posts/${params.postId}`);
+            console.log(response);
             setPostContent(response.data);
         };
 
@@ -39,17 +42,18 @@ export default function Write() {
     }
 
     const handleSave = (e) => {
-        setPostContent({...postContent, userId: user._id, published: false, publishDate: null});   
-        submitPost(postContent);
+        const newPostContent = {...postContent, userId: user._id, published: false, publishDate: null, tags: selectedTags}
+        setPostContent(newPostContent);
+        submitPost(newPostContent, true);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPostContent({...postContent, userId : user._id, published: !publishLater, publishDate: postContent.publishDate ? postContent.publishDate : new Date()});
-        submitPost(postContent);
+        setPostContent({...postContent, userId : user._id, published: !publishLater, publishDate: publishLater ? postContent.publishDate : new Date(), tags: selectedTags});
+        submitPost(postContent, false);
     }
 
-    const submitPost = async (post) => {
+    const submitPost = async (post, routeToDraft) => {
         try {
             let res;
             if (params.postId) {
@@ -57,6 +61,7 @@ export default function Write() {
             } else {
                 res = await axios.post('/posts', post, {headers: {authorization: "Bearer " + user.accessToken}});
             }
+            routeToDraft ? nav(`/write/${res.data._id}`) : nav(`/drafts/`);
             //window.location.replace('/posts/' + res.data._id);
         } catch(error) {
             console.log('error ', error);
@@ -70,9 +75,9 @@ export default function Write() {
                     <input type='text' className='write-input' autoFocus={true} name='title' onChange={handleChange} value={postContent.title || ''} placeholder='Title' />
                 </div>
                 <ReactQuill theme='snow' value={postContent.body || ''} name='body' onChange={handleBodyChange} />
-                <Combobox />
+                <Combobox passSelectedTags={setSelectedTags} />
                 <div className='submit-wrapper'>
-                    <button className="write-submit" name='save' onClick={handleSave}>Save</button>
+                    <button className="write-submit" type='button' name='save' onClick={handleSave}>Save</button>
                     <span> ~or~ </span>
                     <input type='checkbox' id='publish-later' name='publishLater' checked={publishLater} onChange={publishLaterChange}></input>
                     <label htmlFor='publish-later'>Publish Later</label>

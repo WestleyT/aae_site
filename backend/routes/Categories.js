@@ -6,10 +6,14 @@ const userValidation = require('../validation/UserValidation');
 router.post("/", async(req, res) => { //userValidation.verify, async(req, res) => {
     const newCategories = req.body.tags;
     try {
-        const savedCategories = await Category.insertMany(newCategories);
+        const savedCategories = await Category.insertMany(newCategories, {ordered: false});
         res.status(200).json(savedCategories);
     } catch(error) {
-        res.status(500).json({error: error});
+        error.getWriteErrors().forEach(e => { //check for the expected "Duplicate Error" for tags that already exist
+            if(e.code != 11000) {
+                res.status(500).json({error: error});
+            }
+        });
     }
 })
 

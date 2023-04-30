@@ -16,11 +16,11 @@ export default function Post({post, route}) {
         <div className="post-info">
             <span className='post-title'>{post.title}</span>
             <div className='details'>
-              <span className='post-date'>{dateToWordsFormat(post.publishDate)}</span>
+              <span className='post-date'>{post.publishDate && dateToWordsFormat(post.publishDate)}</span>
               <p className='seperator'> - </p>
               <div className="post-categories">
-                {categories.map((c) => (
-                  <span key={c} className='post-category'>{c} ·</span>
+                {post.tags.map((tag) => (
+                  <span key={tag._id} className='post-category'>{tag.name} ·</span>
                 ))}
               </div>
             </div>

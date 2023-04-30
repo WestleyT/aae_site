@@ -18,17 +18,23 @@ export default function Combobox(props) {
         fetchCategories();
     }, []);
 
+    useEffect(() => {
+        props.passSelectedTags(selectedOptions);
+    }, [selectedOptions]);
+
     const addSelection = (e) => {
-        const matchedOption = options.find(opt => opt.name === selectedTagValue);
-        setSelectedOptions(selectedOptions => [...selectedOptions, matchedOption ? matchedOption : {name: selectedTagValue, _id: ''}]);
+        e.preventDefault();
+        //if the selectedOptions don't already include the new value, add it to our list
+        if (selectedOptions.filter(opt => opt.name === selectedTagValue).length === 0) {
+            const matchedOption = options.find(opt => opt.name === selectedTagValue);
+            setSelectedOptions(selectedOptions => [...selectedOptions, matchedOption ? matchedOption : {name: selectedTagValue.toLocaleLowerCase(), _id: ''}]);
+        }
         setSelectedTagValue('');
     }
 
     const deleteTag = (tag) => {
-        console.log(tag);
-        const filteredOptions = selectedOptions.filter(opt => opt.name !== tag.name);
+        const filteredOptions = selectedOptions.filter(opt => opt.name !== tag.tag.name);
         setSelectedOptions(filteredOptions);
-        console.log('selected options after splice ', selectedOptions);
     }
 
     return (

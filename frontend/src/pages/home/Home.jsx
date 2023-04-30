@@ -17,10 +17,6 @@ export default function Home() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    console.log('posts ', posts)
-  }, [posts]);
-
   return (
     <>
       <Header headerText='Articles'></Header>
