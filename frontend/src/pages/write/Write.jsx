@@ -19,7 +19,6 @@ export default function Write() {
     useEffect(() => {
         const fetchContent = async() => {
             const response = await axios.get(`/posts/${params.postId}`);
-            console.log(response);
             setPostContent(response.data);
         };
 
@@ -62,7 +61,6 @@ export default function Write() {
                 res = await axios.post('/posts', post, {headers: {authorization: "Bearer " + user.accessToken}});
             }
             routeToDraft ? nav(`/write/${res.data._id}`) : nav(`/drafts/`);
-            //window.location.replace('/posts/' + res.data._id);
         } catch(error) {
             console.log('error ', error);
         }
@@ -75,7 +73,7 @@ export default function Write() {
                     <input type='text' className='write-input' autoFocus={true} name='title' onChange={handleChange} value={postContent.title || ''} placeholder='Title' />
                 </div>
                 <ReactQuill theme='snow' value={postContent.body || ''} name='body' onChange={handleBodyChange} />
-                <Combobox passSelectedTags={setSelectedTags} />
+                <Combobox passSelectedTags={setSelectedTags} tags={postContent.tags}/>
                 <div className='submit-wrapper'>
                     <button className="write-submit" type='button' name='save' onClick={handleSave}>Save</button>
                     <span> ~or~ </span>

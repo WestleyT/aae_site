@@ -22,6 +22,10 @@ export default function Combobox(props) {
         props.passSelectedTags(selectedOptions);
     }, [selectedOptions]);
 
+    useEffect(() => {
+        setSelectedOptions(props.tags)
+    }, [props.tags])
+
     const addSelection = (e) => {
         e.preventDefault();
         //if the selectedOptions don't already include the new value, add it to our list
@@ -40,7 +44,7 @@ export default function Combobox(props) {
     return (
         <div className="combobox">
             <div className="tag-list">
-                {selectedOptions.map(o => <Tag key={o.name} tag={o} deleteTag={deleteTag}></Tag>)}
+                {selectedOptions && selectedOptions.map(o => <Tag key={o.name} tag={o} deleteTag={deleteTag}></Tag>)}
             </div>
             <div>
                 <label htmlFor="tag-input">Select Tag(s): </label>

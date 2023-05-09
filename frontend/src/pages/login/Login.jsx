@@ -1,6 +1,7 @@
 import { useRef, useContext } from 'react'
 import { Context } from '../../context/Context';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Login.css'
 
 export default function Login() {
@@ -8,6 +9,7 @@ export default function Login() {
   const userRef = useRef();
   const passwordRef = useRef();
   const {dispatch, isFetching} = useContext(Context);
+  const nav = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +26,9 @@ export default function Login() {
     }
   };
 
-  
+  const goToRegisterPage = () => {
+    nav('/register');
+  }
 
   return (
     <div className='login'>
@@ -35,7 +39,7 @@ export default function Login() {
             <label htmlFor="password" placeholder='password'>Password: </label>
             <input className='login-input' type="password" placeholder='enter your password' id='password' ref={passwordRef}/>
             <button className="login-button" type='submit' disabled={isFetching}>Login</button>
-            <button className="login-register-button">Register</button>
+            <button className="login-register-button" type="button" onClick={goToRegisterPage}>Register</button>
         </form>
     </div>
   )

@@ -2,24 +2,23 @@ const jwt = require('jsonwebtoken');
 
 const generateAccessToken = (user) => {
     return jwt.sign({id: user._doc._id, userClass: user._doc.userClass},
-        'mysecretkey', //mysecretkey should be a long difficult string hidden in .env
-        {expiresIn: '15m'}
+        process.env.TOKEN_KEY, //'mysecretkey', //mysecretkey should be a long difficult string hidden in .env
+        {expiresIn: '30m'}
     );
 };
 
 const generateRefreshToken = (user) => {
     return jwt.sign({id: user._doc._id, userClass: user._doc.userClass},
-        "myRefreshSecretKey"
+        process.env.REFRESH_KEY //"myRefreshSecretKey"
     );
 };
 
 const verify = (req, res, next) => {
-    console.log('request in verify ', req);
     const authHeader = req.headers.authorization;
     if (authHeader) {
         const token = authHeader.split(' ')[1];
 
-        jwt.verify(token, "mysecretkey", (err, user) => {
+        jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
             if (err) {
                 return res.status(403).json("Invalid token");
             }
