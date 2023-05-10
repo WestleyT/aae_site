@@ -18,7 +18,7 @@ export default function TopBar() {
         <div className="top-left">
           <h1>Army Ant Entertainment</h1>
           <ul className='top-list'>
-            <li className='top-list-item'>{user && user.username}</li>
+            {user && <li className='top-list-item'>Welcome {user.username}</li>}
             <li className='top-list-item'>
               <Link className='link' to='/'>Home</Link>
             </li>
@@ -32,7 +32,10 @@ export default function TopBar() {
                 <Link className='link' to='/drafts'>Drafts</Link>
               </li>
             }
-            {logInOutButton}     
+            {logInOutButton}
+            {!user && <li className='top-list-item'>
+              <Link className='link' to='/register'>Register</Link>
+            </li>}
           </ul>
         </div>
         <div className="top-center">
