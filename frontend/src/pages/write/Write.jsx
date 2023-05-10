@@ -1,5 +1,5 @@
 import './Write.css';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Context } from '../../context/Context';
@@ -15,6 +15,8 @@ export default function Write() {
     const params = useParams();
     const {user} = useContext(Context);
     const nav = useNavigate();
+
+    const savedModal = useRef();
 
     useEffect(() => {
         const fetchContent = async() => {
@@ -44,6 +46,7 @@ export default function Write() {
         const newPostContent = {...postContent, userId: user._id, published: false, publishDate: null, tags: selectedTags}
         setPostContent(newPostContent);
         submitPost(newPostContent, true);
+        savedModal.current?.showModal();
     }
 
     const handleSubmit = (e) => {
@@ -68,6 +71,10 @@ export default function Write() {
 
     return (
         <div className="write">
+            <dialog id='saved-confirm-modal' ref={savedModal}>
+                <h3>Save Successful</h3>
+                <button className='write-submit' type='button' onClick={() => savedModal.current?.close()}>Okay!</button>
+            </dialog>
             <form className='write-form' onSubmit={handleSubmit}>
                 <div className='write-form-group'>
                     <input type='text' className='write-input' autoFocus={true} name='title' onChange={handleChange} value={postContent.title || ''} placeholder='Title' />
