@@ -19,7 +19,6 @@ router.post("/", userValidation.verify, async(req, res) => {
         }
         res.status(200).json(savedPost);
     } catch(error) {
-        console.log('error ', error);
         res.status(500).json(error);
     }
 });

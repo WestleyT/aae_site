@@ -3,7 +3,7 @@ const Category = require('../models/Category');
 const userValidation = require('../validation/UserValidation');
 
 //create category
-router.post("/", async(req, res) => { //userValidation.verify, async(req, res) => {
+router.post("/", userValidation.verify, async(req, res) => {
     const newCategories = req.body.tags;
     try {
         const savedCategories = await Category.insertMany(newCategories, {ordered: false});

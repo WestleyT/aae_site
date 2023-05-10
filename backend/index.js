@@ -6,6 +6,7 @@ const authRoute = require('./routes/Auth');
 const usersRoute = require('./routes/Users');
 const postsRoute = require('./routes/Posts');
 const categoriesRoute = require('./routes/Categories');
+const userClassesRoute = require('./routes/UserClass');
 
 dotenv.config();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/posts", postsRoute);
 app.use("/api/categories", categoriesRoute);
+app.use("/api/user-classes", userClassesRoute);
 
 app.listen("5000", () => {
     console.log('backend is running with nodemon');

@@ -8,11 +8,11 @@ const UserSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
-        required: true
+        required: false
     },
     lastName: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -28,8 +28,9 @@ const UserSchema = new mongoose.Schema({
         default: ''
     },
     userClass: {
-        type: String,
-        default: 'reader'
+        type: mongoose.ObjectId,
+        required: true,
+        ref: 'UserClass'
     }
 }, {timestamps: true});
 

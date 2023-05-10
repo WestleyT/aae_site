@@ -12,12 +12,9 @@ router.post("/register", async(req, res) => {
 
         const newUser = new User({
             username: req.body.username,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
             email: req.body.email,
             password: hashedPassword,
-            userClass: req.body.userClass,
-            profilePicture: req.body.profilePicture
+            userClass: '645add89fb9974b364c521a9'
         })
 
         const user = await newUser.save();
@@ -30,7 +27,7 @@ router.post("/register", async(req, res) => {
 //Login
 router.post("/login", async(req, res) => {
     try {
-        const user = await User.findOne({email: req.body.email});
+        const user = await User.findOne({email: req.body.email}).populate('userClass');
         !user && res.status(400).json("username or password is incorrect");
 
         const validated = await bcrypt.compare(req.body.password, user.password);
@@ -40,7 +37,8 @@ router.post("/login", async(req, res) => {
         const refreshToken = userValidation.generateRefreshToken(user);
 
         const {password, ...others} = user._doc;
-        const responseObj = {...others, accessToken, refreshToken}
+        const responseObj = {...others, accessToken, refreshToken};
+        responseObj.userClass = responseObj.userClass.name;
         res.status(200).json(responseObj);
     } catch(error) {
         res.status(500).json({error: error});
@@ -60,7 +58,7 @@ router.post("/refresh", (req, res) => {
         return res.status(403).json("Invalid token");
     }
 
-    jwt.verify(refreshToken, "myRefreshSecretKey", (err, user) => {
+    jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, user) => {
         err && console.log(err);
 
         refreshTokens = refreshTokens.filter((token) => token !== refreshToken);

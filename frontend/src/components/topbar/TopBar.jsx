@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../../context/Context';
+import { canWrite } from '../../utils/userPermissions';
 import './TopBar.css'
 
 export default function TopBar() {
@@ -17,16 +18,17 @@ export default function TopBar() {
         <div className="top-left">
           <h1>Army Ant Entertainment</h1>
           <ul className='top-list'>
+            <li className='top-list-item'>{user && user.username}</li>
             <li className='top-list-item'>
               <Link className='link' to='/'>Home</Link>
             </li>
             {
-              user && user.userClass === 'writer' && <li className='top-list-item'>
+              user && canWrite(user) && <li className='top-list-item'>
                 <Link className='link' to='/write'>Write</Link>
               </li>
             }
             {
-              user && user.userClass === 'writer' && <li className='top-list-item'>
+              user && canWrite(user) && <li className='top-list-item'>
                 <Link className='link' to='/drafts'>Drafts</Link>
               </li>
             }

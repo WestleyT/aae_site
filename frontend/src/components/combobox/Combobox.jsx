@@ -23,7 +23,9 @@ export default function Combobox(props) {
     }, [selectedOptions]);
 
     useEffect(() => {
-        setSelectedOptions(props.tags)
+        if (props.tags) {
+            setSelectedOptions(props.tags);
+        }
     }, [props.tags])
 
     const addSelection = (e) => {

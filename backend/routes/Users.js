@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
 
 //Update
 router.put("/:id", async(req, res) => {
@@ -42,7 +41,7 @@ router.delete("/:id", async(req, res) => {
 //Get User
 router.get("/:id", async(req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).populate('userClass');
         const {password, ...others} = user._doc;
         res.status(200).json(others);
     } catch(error) {
@@ -53,8 +52,7 @@ router.get("/:id", async(req, res) => {
 //Get All Users
 router.get("/", async(req, res) => {
     try {
-        const users = await User.find();
-        //const {password, ...others} = users._doc; don't know why this returns an empty thing, look into later 
+        const users = await User.find().populate('userClass');
         res.status(200).json(users);
     } catch(error) {
         res.status(500).json(error);

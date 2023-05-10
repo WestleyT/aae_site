@@ -24,11 +24,6 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.ObjectId,
         ref: 'Category'
     }],
-    // tags: {
-    //     type: Array,
-    //     required: false,
-    //     ref: 'Category'
-    // },
     published: {
         type: Boolean,
         required: true
