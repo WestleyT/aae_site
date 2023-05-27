@@ -51,8 +51,9 @@ export default function Write() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPostContent({...postContent, userId : user._id, published: !publishLater, publishDate: publishLater ? postContent.publishDate : new Date(), tags: selectedTags});
-        submitPost(postContent, false);
+        const newPostContent = {...postContent, userId : user._id, published: !publishLater, publishDate: publishLater ? postContent.publishDate : new Date(), tags: selectedTags}
+        setPostContent(newPostContent);
+        submitPost(newPostContent, false);
     }
 
     const submitPost = async (post, routeToDraft) => {
