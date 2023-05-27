@@ -2,14 +2,14 @@ const jwt = require('jsonwebtoken');
 
 const generateAccessToken = (user) => {
     return jwt.sign({id: user._doc._id, userClass: user._doc.userClass},
-        process.env.TOKEN_KEY, //'mysecretkey', //mysecretkey should be a long difficult string hidden in .env
+        process.env.TOKEN_KEY,
         {expiresIn: '30m'}
     );
 };
 
 const generateRefreshToken = (user) => {
     return jwt.sign({id: user._doc._id, userClass: user._doc.userClass},
-        process.env.REFRESH_KEY //"myRefreshSecretKey"
+        process.env.REFRESH_KEY
     );
 };
 
@@ -30,12 +30,5 @@ const verify = (req, res, next) => {
         res.status(401).json("You are not authenticated!");
     }
 };
-
-//just an example of what a request from frontend would look like
-// await axios.delete('/users/' + id, {
-//     headers: {authorization: "Bearer " + user.accessToken} //the api will splite Bearer off, reading only the access token  
-// });
-
-
 
 module.exports = {generateAccessToken, generateRefreshToken, verify};
