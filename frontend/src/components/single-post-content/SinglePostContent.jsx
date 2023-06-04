@@ -11,7 +11,7 @@ export default function SinglePostContent() {
 
   useEffect(() => {
     const fetchContent = async() => {
-      const response = await axios.get(`/posts/${params.postId}`);
+      const response = await axios.get(`/api/posts/${params.postId}`);
       setContent(response.data);
     };
     fetchContent();

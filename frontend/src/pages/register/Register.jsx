@@ -23,7 +23,7 @@ export default function Register() {
     }
 
     try {
-      const res = await axios.post('/auth/register', newUserInfo);
+      const res = await axios.post('/api/auth/register', newUserInfo);
     } catch(error) {
       console.log(error.response.data);
       if (error.response.data.code === 11000) {

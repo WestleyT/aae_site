@@ -12,7 +12,7 @@ export default function Drafts() {
 
   useEffect(() => {
     const fetchPosts = async() => {
-      const response = await axios.get(`/posts/drafts/${user._id}`);
+      const response = await axios.get(`/api/posts/drafts/${user._id}`);
       setPosts(response.data);
     };
     fetchPosts();

@@ -11,7 +11,7 @@ export default function Combobox(props) {
 
     useEffect(() => {
         const fetchCategories = async() => {
-            const response = await axios.get('/categories');
+            const response = await axios.get('/api/categories');
             setOptions(response.data);
         };
 

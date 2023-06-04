@@ -20,7 +20,7 @@ export default function Write() {
 
     useEffect(() => {
         const fetchContent = async() => {
-            const response = await axios.get(`/posts/${params.postId}`);
+            const response = await axios.get(`/api/posts/${params.postId}`);
             setPostContent(response.data);
         };
 
@@ -60,9 +60,9 @@ export default function Write() {
         try {
             let res;
             if (params.postId) {
-                res = await axios.post(`/posts/${params.postId}`, post, {headers: {authorization: "Bearer " + user.accessToken}})
+                res = await axios.post(`/api/posts/${params.postId}`, post, {headers: {authorization: "Bearer " + user.accessToken}})
             } else {
-                res = await axios.post('/posts', post, {headers: {authorization: "Bearer " + user.accessToken}});
+                res = await axios.post('/api/posts', post, {headers: {authorization: "Bearer " + user.accessToken}});
             }
             routeToDraft ? nav(`/write/${res.data._id}`) : nav(`/drafts/`);
         } catch(error) {

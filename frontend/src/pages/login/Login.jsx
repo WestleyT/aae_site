@@ -16,7 +16,7 @@ export default function Login() {
     dispatch({type: 'LOGIN_START'});
 
     try {
-      const res = await axios.post('/auth/login', {
+      const res = await axios.post('/api/auth/login', {
         email: userRef.current.value,
         password: passwordRef.current.value
       })
