@@ -32,10 +32,10 @@ export default function TopBar() {
                 <Link className='link' to='/drafts'>Drafts</Link>
               </li>
             }
-            {logInOutButton}
-            {!user && <li className='top-list-item'>
+            {/* {logInOutButton} */}
+            {/* {!user && <li className='top-list-item'>
               <Link className='link' to='/register'>Register</Link>
-            </li>}
+            </li>} */}
           </ul>
         </div>
         <div className="top-center">
